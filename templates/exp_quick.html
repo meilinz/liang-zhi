@@ -134,7 +134,7 @@
         show_clickable_nav: true
     };
 
-    /*let age = {
+    let age = {
         type: 'survey-text',
         questions: [{prompt: '您的年龄是（几岁，请填一个整数，如：22）？', required: true}]
     };
@@ -162,12 +162,7 @@
     let history = {
         type: 'survey-text',
         questions: [{prompt: '您是否在中国大陆以外连续居住过6个月以上？如没有，填0。如有，填在境外居住年数（如：2），不满一年填1。', required: true}]
-    };*/
-
-    let participantID = {
-        type: 'survey-text',
-        questions: [{prompt: '您的参与者代码是？', required: true}]
-    };    
+    };
 
     let instruction1 = {
         type: 'instructions',
@@ -192,10 +187,10 @@
         stimulus: 'static/img/Object_0176_penguin_3.png',
         postprocessing: saveFunction,
         response_ends_trial: false,
-        prompt: "<p>麦克风测试: 如果您能听见自己的声音，说明录音成功可以点击下一页继续。</br>如果您对录音不满意，可以点击重新录音。</br><strong>如果没有声音，请检查麦克风设置。</strong></p>",
+        prompt: "<p>麦克风测试: 如果您能听见自己的声音，说明录音成功可以点击下一页继续。</br>如果您对录音不满意，可以点击重新录音。</br>如果没有声音，请检查麦克风设置。</p>",
         allowPlayback: true,
         bufferLength
-    };   
+    };    
 
     let instruction2 = {
         type:'instructions',
@@ -255,6 +250,7 @@
       randomize_order: false
     }
     
+    //let code = Math.floor(Math.random()*100000000);
     let completionMessage = "实验结果已经记录到数据库，您的完成代码是 " + uniqueId.toString() + "。\n 请记下这个代码并截图作为您投标的依据。";
 
     let completion_code = {
@@ -264,13 +260,12 @@
     }
 
     timeline.push(welcome);
-    //timeline.push(age);
-    //timeline.push(gender);
-    //timeline.push(nativespeaker);
-    //timeline.push(dialect);
-    //timeline.push(residence);
-    //timeline.push(history);
-    timeline.push(participantID);
+    timeline.push(age);
+    timeline.push(gender);
+    timeline.push(nativespeaker);
+    timeline.push(dialect);
+    timeline.push(residence);
+    timeline.push(history);
     timeline.push(instruction1);
     timeline.push(mictest);
     timeline.push(instruction2);
