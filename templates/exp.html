@@ -11,7 +11,7 @@
     <script src="/static/jspsych.js"></script>
     <script src="/static/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="/static/plugins/jspsych-image-audio-response-quick.js"></script>
-    <!-- <script src="/static/plugins/jspsych-image-audio-response.js"></script> -->
+    <script src="/static/plugins/jspsych-image-audio-response.js"></script>
     <script src="/static/plugins/jspsych-image-audio-response-testmic.js"></script>
     <script src="/static/plugins/jspsych-instructions.js"></script>
     <script src="/static/plugins/jspsych-survey-text.js" type="text/javascript"></script>
@@ -117,10 +117,86 @@
         {stimulus: 'static/img/Object_0388_bow_4.png'},
     ]*/
 
-    let test_stimuli = [
+/*    let test_stimuli = [
         {stimulus: 'static/img/Match_0008_cabbage_2.png'},
         {stimulus: 'static/img/Match_0093_glove_3.png'},
         {stimulus: 'static/img/Match_0108_pipe_3.png'},
+    ]*/
+
+    let blockA = [
+        {stimulus: 'static/img/Match_0030_sofa_4.png'},
+        {stimulus: 'static/img/Match_0068_broom_2.png'},
+        {stimulus: 'static/img/Match_0108_pipe_3.png'},
+        {stimulus: 'static/img/Match_0120_fan_3.png'},
+        {stimulus: 'static/img/Match_0121_garlic_4.png'},
+        {stimulus: 'static/img/Match_0163_woodendoor_2.png'},
+        {stimulus: 'static/img/Match_0189_torch_2.png'},
+        {stimulus: 'static/img/Match_0297_plane_4.png'},
+        {stimulus: 'static/img/Match_0330_screwnut_4.png'},
+        {stimulus: 'static/img/MisMatch_0005_brush_3.png'},
+        {stimulus: 'static/img/MisMatch_0214_watch_3.png'},
+        {stimulus: 'static/img/MisMatch_0312_comb_4.png'},
+        {stimulus: 'static/img/MisMatch_0381_desklamp_3.png'},
+        {stimulus: 'static/img/Object_0026_abacus_3.png'},
+        {stimulus: 'static/img/Object_0123_printer_4.png'},
+        {stimulus: 'static/img/Object_0314_camera_3.png'},
+    ]
+
+    let blockB = [
+        {stimulus: 'static/img/Match_0008_cabbage_2.png'},
+        {stimulus: 'static/img/Match_0055_screwdriver_2.png'},
+        {stimulus: 'static/img/Match_0064_stapler_4.png'},
+        {stimulus: 'static/img/Match_0082_pakchoi_3.png'},
+        {stimulus: 'static/img/Match_0125_key_3.png'},
+        {stimulus: 'static/img/Match_0128_tie_3.png'},
+        {stimulus: 'static/img/Match_0153_microscope_3.png'},
+        {stimulus: 'static/img/Match_0245_belt_3.png'},
+        {stimulus: 'static/img/Match_0255_spoon_4.png'},
+        {stimulus: 'static/img/Match_0328_washingmachine_2.png'},
+        {stimulus: 'static/img/Match_0373_piano_3.png'},
+        {stimulus: 'static/img/MisMatch_0034_harp_2.png'},
+        {stimulus: 'static/img/MisMatch_0073_coffeemachine_3.png'},
+        {stimulus: 'static/img/MisMatch_0352_truck_3.png'},
+        {stimulus: 'static/img/Object_0274_racket_4.png'},
+        {stimulus: 'static/img/Object_0388_bow_4.png'},
+    ]
+
+    let blockC = [
+        {stimulus: 'static/img/Match_0022_axe_2.png'},
+        {stimulus: 'static/img/Match_0036_bracelet_3.png'},
+        {stimulus: 'static/img/Match_0063_mincer_2.png'},
+        {stimulus: 'static/img/Match_0118_silvermedal_2.png'},
+        {stimulus: 'static/img/Match_0145_telescope_2.png'},
+        {stimulus: 'static/img/Match_0128_tie_3.png'},
+        {stimulus: 'static/img/Match_0178_motocycle_3.png'},
+        {stimulus: 'static/img/Match_0183_hammer_4.png'},
+        {stimulus: 'static/img/Match_0200_laptop_3.png'},
+        {stimulus: 'static/img/Match_0249_nailclippers_2.png'},
+        {stimulus: 'static/img/Match_0251_blackboard_2.png'},
+        {stimulus: 'static/img/Match_0267_egg_4.png'},
+        {stimulus: 'static/img/Match_0301_bicycle_2.png'},
+        {stimulus: 'static/img/Match_0320_thermometer_3.png'},
+        {stimulus: 'static/img/MisMatch_0258_draftingcompasses_4.png'},
+        {stimulus: 'static/img/Object_0031_hairblower_2.png'},
+    ]
+
+    let blockD = [
+        {stimulus: 'static/img/Match_0044_iron_4.png'},
+        {stimulus: 'static/img/Match_0088_tv_2.png'},
+        {stimulus: 'static/img/Match_0091_triangleruler_4.png'},
+        {stimulus: 'static/img/Match_0093_glove_3.png'},
+        {stimulus: 'static/img/Match_0106_guitar_3.png'},
+        {stimulus: 'static/img/Match_0108_pipe_3.png'},
+        {stimulus: 'static/img/Match_0114_toothbrush_4.png'},
+        {stimulus: 'static/img/Match_0127_popsicle_4.png'},
+        {stimulus: 'static/img/Match_0155_paperclip_4.png'},
+        {stimulus: 'static/img/Match_0273_slingshot_2.png'},
+        {stimulus: 'static/img/MisMatch_0068_handfan_4.png'},
+        {stimulus: 'static/img/MisMatch_0232_microwave_2.png'},
+        {stimulus: 'static/img/MisMatch_0310_lighthouse_2.png'},
+        {stimulus: 'static/img/MisMatch_0314_hat_2.png'},
+        {stimulus: 'static/img/MisMatch_0359_mirror_3.png'},
+        {stimulus: 'static/img/Object_0014_scissors_4.png'},
     ]
 
     let welcome = {
@@ -134,40 +210,15 @@
         show_clickable_nav: true
     };
 
-    /*let age = {
+     let experimentDate = {
         type: 'survey-text',
-        questions: [{prompt: '您的年龄是（几岁，请填一个整数，如：22）？', required: true}]
-    };
-
-    let gender = {
-        type: 'survey-multi-choice',
-        questions: [{prompt: '您的性别是？', options: ["男", "女"], required: true}]
-    };
-
-    let nativespeaker = {
-        type: 'survey-multi-choice',
-        questions: [{prompt: "普通话/官话是你的母语吗（3岁以前说普通话/官话）?", options: ["是的", "不是"], required: true}]
-    };
-
-    let dialect = {
-        type: 'survey-multi-choice',
-        questions: [{prompt: "除了普通话/官话方言/北方方言以外，你平时讲其它汉语方言吗 (如有，选最常用的）？", options: ["基本不讲其它方言","粤语", "吴语", "客语", "闽语（包括潮汕话）", "湘语","赣语"], required: true}]
-    };
-
-    let residence = {
-        type: 'survey-multi-choice',
-        questions: [{prompt: "你现在居住在?", options: ["中国大陆", "中国大陆以外"], required: true}]
-    };
-
-    let history = {
-        type: 'survey-text',
-        questions: [{prompt: '您是否在中国大陆以外连续居住过6个月以上？如没有，填0。如有，填在境外居住年数（如：2），不满一年填1。', required: true}]
-    };*/
+        questions: [{prompt: '今天日期是（年-月-日，例如：2019-04-08）?', required: true}]
+    };  
 
     let participantID = {
         type: 'survey-text',
         questions: [{prompt: '您的参与者代码是？', required: true}]
-    };    
+    };  
 
     let instruction1 = {
         type: 'instructions',
@@ -235,7 +286,7 @@
         show_clickable_nav: true
     };
     
-    let test = {
+    let quick = {
       type: 'image-audio-response-quick',
       stimulus: jsPsych.timelineVariable('stimulus'),
       postprocessing: saveFunction,
@@ -248,9 +299,43 @@
 
     }
 
-    let test_procedure = {
-      timeline: [test],
-      timeline_variables: test_stimuli,
+    let slow = {
+      type: 'image-audio-response',
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      postprocessing: saveFunction,
+      data: jsPsych.timelineVariable('data'),
+      prompt: "<p>请说出图中物品的数量和名称</p>",
+      bufferLength,
+      on_finish: function(){
+        psiturk.startTask();
+      }
+
+    }
+
+    let testBlockA = {
+      timeline: [slow],
+      timeline_variables: blockA,
+      repetitions: 1,
+      randomize_order: false
+    }
+
+    let testBlockB = {
+      timeline: [quick],
+      timeline_variables: blockB,
+      repetitions: 1,
+      randomize_order: false
+    }
+
+    let testBlockC = {
+      timeline: [slow],
+      timeline_variables: blockC,
+      repetitions: 1,
+      randomize_order: false
+    }
+
+    let testBlockD = {
+      timeline: [quick],
+      timeline_variables: blockD,
       repetitions: 1,
       randomize_order: false
     }
@@ -264,21 +349,19 @@
     }
 
     timeline.push(welcome);
-    //timeline.push(age);
-    //timeline.push(gender);
-    //timeline.push(nativespeaker);
-    //timeline.push(dialect);
-    //timeline.push(residence);
-    //timeline.push(history);
+    timeline.push(experimentDate);
     timeline.push(participantID);
     timeline.push(instruction1);
     timeline.push(mictest);
     timeline.push(instruction2);
-    timeline.push(practice1);
-    timeline.push(practice2);
-    timeline.push(practice3);
+    //timeline.push(practice1);
+    //timeline.push(practice2);
+    //timeline.push(practice3);
     timeline.push(instruction3);
-    timeline.push(test_procedure);
+    timeline.push(testBlockA);
+    timeline.push(testBlockB);
+    timeline.push(testBlockC);
+    timeline.push(testBlockD);
     timeline.push(completion_code);
 
     jsPsych.init({
@@ -292,9 +375,7 @@
             jsPsych.data.displayData();
         },
         on_data_update: function(trial_data) {
-            // Only need to do post-processing for audio trials.
-            //if (!trial_data.audioData)
-                //return;
+
             psiturk.recordTrialData(trial_data);
 
             // Submit trial audio to server.
