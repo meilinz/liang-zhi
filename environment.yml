@@ -12,7 +12,7 @@ dependencies:
   - gitdb2=2.0.3=py_0
   - gitpython=2.1.8=py_0
   - gnureadline=6.3.3=py27_0
-  - gunicorn==19.7.1=py27_0
+  - gunicorn=19.7.1=py27_0
   - ipaddress=1.0.19=py27_0
   - itsdangerous=0.24=py_2
   - jinja2=2.10=py27_0
