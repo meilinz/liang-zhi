@@ -1,0 +1,34 @@
+---
+title: "Online Classifier Survey Analysis"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(tidyverse)
+```
+```{r}
+data <- read.csv("classifier_knowledge_survey_online_20190408.csv", encoding="UTF-8")
+
+data <- data[-c(1,2),]
+data <- subset(data, Status != "Survey Preview")
+data <- subset(data, Finished == "True")
+data <- data[grep("普通话/国语",data$native),]
+data <- subset(data, residence == "中国大陆")
+
+data <- data[c(9,20,24:151)]
+
+library(tidyr)
+
+data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
+data <- data[order(data$ResponseId),]
+
+data$classifier <- ifelse(data$response == "个", "general", "specific")
+#create column stimulus cabbage_2
+#create column a=first, b=second
+# data <- spread(data,)
+
+```
