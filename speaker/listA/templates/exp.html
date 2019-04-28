@@ -139,7 +139,7 @@
     let welcome = {
         type: 'instructions',
         pages: ['<h2>欢迎来到看图说话游戏！</h2> 在这个游戏里，您将会看到一些图片。\
-        <br/>您的任务是说出图中物品的数量和名称，例如“两个南瓜”，目标是帮助对方从一些待选的图片中选出对应的图片。\
+        <br/>您的任务是说出图中物品的数量和名称，例如“三只企鹅”，目标是帮助对方从一些待选的图片中选出对应的图片。\
         <br/>在实验过程中，您将会被录音。</br></br>\
         <div style="float: center;"><img src="static/img/reference.png"></img></br></br>',
         '在游戏正式开始之前，您将先测试麦克风，然后进入练习部分。完成简短的练习后，您将进入游戏的主要部分。',
@@ -182,7 +182,7 @@
         stimulus: 'static/img/testmic.png',
         postprocessing: saveFunction,
         response_ends_trial: false,
-        prompt: "<p>麦克风测试: <strong>请说出您的参与者代码。</strong> </br>如果您能听见自己的声音，说明录音成功可以点击下一页继续。</br>如果您对录音不满意，可以点击重新录音。</br><strong>如果没有声音，请检查麦克风设置。</strong></p>",
+        prompt: "<p>请回答: <strong>您的参与者代码是多少？</strong>  </br>如果您能听见自己的声音，说明录音成功可以点击下一页继续。</br>如果您对录音不满意，可以点击重新录音。</br><strong>如果没有声音，请检查麦克风设置。</strong></p>",
         allowPlayback: true,
         bufferLength
     };   
@@ -312,7 +312,7 @@
     let completion_code = {
         type: 'survey-text',
         preamble: completionMessage,
-        questions: [{prompt: '记录代码及截图后，请将以上完成代码复制粘贴到这里，并点击下一页提交。如果没有点击下一页提交，您的数据将没有被记录到数据库。'}]
+        questions: [{prompt: '请将以上完成代码复制粘贴到这里，并点击下一页提交。如果没有点击下一页提交，您的数据将没有被记录到数据库。'}]
     }
 
     timeline.push(welcome);
