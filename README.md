@@ -1,9 +1,9 @@
 # liang-zhi
 Reference Game
 
-Open a terminal and navigate to the directory
+Open a terminal and navigate to the directory (e.g., listA)
 ```sh
-$ cd ~/Experiments/liang-zhi
+$ cd ~/Experiments/liang-zhi/speaker/listA
 ```
 Activate the python environment for the experiment to run locally
 ```sh
@@ -23,4 +23,4 @@ $ debug
 ```
 Then, open the link using Chrome. It should open a tab automatically. 
 
-**Remember to change `0.0.0.0` to `localhost` in the address bar of the Chrome Browser**
+**Remember to check if `localhost` is in the address bar of the Chrome Browser**
