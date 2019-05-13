@@ -13,22 +13,34 @@ library(tidyverse)
 ```{r}
 data <- read.csv("classifier_knowledge_survey_online_20190408.csv", encoding="UTF-8")
 
-data <- data[-c(1,2),]
+data <- data[-c(1,2),] # remove column name and description
 data <- subset(data, Status != "Survey Preview")
 data <- subset(data, Finished == "True")
 data <- data[grep("普通话/国语",data$native),]
 data <- subset(data, residence == "中国大陆")
 
-data <- data[c(9,20,24:151)]
-
-library(tidyr)
+data <- data[c(9,20,24:151)] # keep ResponseId, native, responses
 
 data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
 data <- data[order(data$ResponseId),]
 
-data$classifier <- ifelse(data$response == "个", "general", "specific")
-#create column stimulus cabbage_2
-#create column a=first, b=second
-# data <- spread(data,)
+data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)# edit typo
+
+# create column item_number: a=first, b=second
+data$item_number <- ifelse(grepl("qa",data$item), "first", "second")
+
+#create column item_name: e.g. cabbage_2
+data <- separate(data, item, c("item_name"), "((_q))", extra = "drop")
+
+#separate
+#data <- spread(data, item_number, response)
+## does not work because each item appears multiple times for each participant?
+## leave as is in long format 5/13/19
+
+# add column for classifier_type- general or specific
+data$classifier_type <- ifelse(data$response == "个", "general", "specific")
+## what to do for '没有' or blank?
+## leave for now, ignore second questions 5/13/19
+
 
 ```
