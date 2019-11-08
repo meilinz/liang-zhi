@@ -1,0 +1,88 @@
+---
+title: "Inlab Classifier Survey Analysis"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+raw_data <- read.csv("classifier_knowledge_survey_inlab_20190429_20191025.csv", encoding="UTF-8")
+
+data <- raw_data
+```
+
+
+```{r}
+
+# exclude people
+data <- data[-c(1,2),] # remove column name and description
+data <- subset(data, Status != "Survey Preview")
+data <- subset(data, Finished == "True")
+data <- data[grep("普通话/国语",data$native),]
+data <- subset(data, residence == "中国大陆")
+data <- subset(data, ResponseId != "R_3sdp0npX5mgVzHG") # participant did not use classifiers
+
+data <- data[c(9,20,24:151)] # keep ResponseId, native, responses
+
+data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
+data <- data[order(data$ResponseId),]
+
+data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)# edit typo
+
+# create column item_number: a=first, b=second
+data$item_number <- ifelse(grepl("qa",data$item), "first", "second")
+
+# create column item_name: e.g. cabbage_2
+data <- separate(data, item, c("item_name"), "((_q))", extra = "drop")
+
+# separate
+#data <- spread(data, item_number, response)
+## does not work because each item appears multiple times for each participant?
+## leave as is in long format 5/13/19
+
+# add column for classifier_type- general or specific
+data$classifier_type <- ifelse(data$response == "个", "general", "specific")
+## what to do for '没有' or blank?
+## leave for now, ignore second questions 5/13/19
+
+# convert item_name, response, item_number, classifier_type to factor
+data$item_name <- as.factor(data$item_name)
+data$response <-as.factor(data$response)
+data$item_number <- as.factor(data$item_number)
+data$classifier_type <- as.factor(data$classifier_type)
+data <- droplevels(data)
+
+# count most frequently used CL and relative frequency, sorted by count
+CL_counts <- data %>% filter(item_number == "first") %>% 
+  group_by(.dots=c("item_name", "response")) %>% 
+  tally(sort = TRUE, name = "count") %>% 
+  mutate(freq = count / sum(count)) %>% 
+  top_n(n=1, wt = freq)
+```
+```{r}
+# count most frequently used CL and relative frequency, all classifiers, sorted by item
+CL_counts_all <- data %>% 
+  filter(item_number == "first") %>% 
+  group_by(.dots=c("item_name", "response")) %>% 
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count))
+```
+
+```{r}
+# count most frequently used CL and relative frequency, specific classifiers only
+CL_counts_specific <- data %>% 
+  filter(item_number == "first") %>% 
+  group_by(.dots=c("item_name", "response")) %>% 
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count)) %>% 
+  top_n(n=2, wt = freq) %>% 
+  filter(response != "个") %>% 
+  top_n(n=1, wt = freq)
+```
