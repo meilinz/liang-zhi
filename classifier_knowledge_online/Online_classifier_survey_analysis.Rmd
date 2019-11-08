@@ -53,7 +53,6 @@ data$item_number <- as.factor(data$item_number)
 data$classifier_type <- as.factor(data$classifier_type)
 data <- droplevels(data)
 
-## for mtg 5/28
 # count most frequently used CL and relative frequency, sorted by count
 CL_counts <- data %>% filter(item_number == "first") %>% 
   group_by(.dots=c("item_name", "response")) %>% 
@@ -80,14 +79,4 @@ CL_counts_specific <- data %>%
   top_n(n=2, wt = freq) %>% 
   filter(response != "个") %>% 
   top_n(n=1, wt = freq)
-```
-
-
-```{r}
-head(data)
-```
-
-
-```{r}
-str(data)
 ```
