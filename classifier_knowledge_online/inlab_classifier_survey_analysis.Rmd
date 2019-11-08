@@ -1,5 +1,5 @@
 ---
-title: "Online Classifier Survey Analysis"
+title: "Inlab Classifier Survey Analysis"
 output: html_notebook
 ---
 
@@ -10,10 +10,16 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ```{r}
 library(tidyverse)
 ```
+
+
 ```{r}
-raw_data <- read.csv("classifier_knowledge_survey_online_20190408.csv", encoding="UTF-8")
+raw_data <- read.csv("classifier_knowledge_survey_inlab_20190429_20191025.csv", encoding="UTF-8")
 
 data <- raw_data
+```
+
+
+```{r}
 
 # exclude people
 data <- data[-c(1,2),] # remove column name and description
