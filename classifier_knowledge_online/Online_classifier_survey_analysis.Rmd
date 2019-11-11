@@ -11,9 +11,9 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 library(tidyverse)
 ```
 ```{r}
-raw_data <- read.csv("classifier_knowledge_survey_online_20190408.csv", encoding="UTF-8")
+raw_data_online <- read.csv("classifier_knowledge_survey_online_20190408.csv", encoding="UTF-8")
 
-data <- raw_data
+data <- raw_data_online
 
 # exclude people
 data <- data[-c(1,2),] # remove column name and description
