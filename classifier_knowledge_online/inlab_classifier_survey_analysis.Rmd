@@ -34,18 +34,20 @@ data <- subset(data,select = c(ResponseId,participant_code,cabbage_2_qa:bow_4_qb
 data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
 data <- data[order(data$participant_code),]
 
-data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)# edit typo
+# edit typos
+data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)
+data$item <- gsub("printer_4_qa.1","racket_4_qa",data$item)
+data$item <- gsub("lighthouse_qb","lighthouse_2_qb",data$item)
+
+```
+
+```{r}
 
 # create column item_number: a=first, b=second
 data$item_number <- ifelse(grepl("qa",data$item), "first", "second")
 
 # create column item_name: e.g. cabbage_2
 data <- separate(data, item, c("item_name"), "((_q))", extra = "drop")
-
-# separate
-#data <- spread(data, item_number, response)
-## does not work because each item appears multiple times for each participant?
-## leave as is in long format 5/13/19
 
 # add column for classifier_type- general or specific or zero
 data$classifier_type <- ifelse(data$response == "个", "general","specific")
@@ -59,32 +61,70 @@ data$classifier_type <- as.factor(data$classifier_type)
 data <- droplevels(data)
 ```
 
+
 ```{r}
-# count most frequently used CL and relative frequency, sorted by count
-CL_counts <- data %>% filter(item_number == "first") %>% 
+# Question 1. What is the preferred classifier for each item (first question)?
+# count most frequently used CL and relative frequency, all classifiers, sorted by item
+CL_first_all <- data %>% 
+  filter(item_number == "first") %>% 
   group_by(.dots=c("item_name", "response")) %>% 
-  tally(sort = TRUE, name = "count") %>% 
-  mutate(freq = count / sum(count)) %>% 
-  top_n(n=1, wt = freq)
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count))
+#how to order by count for each item?
+
 ```
 
 ```{r}
+# Question 2. What is the most frequently produced classifier in the second question?
+CL_second_top <- data %>%
+  filter(item_number == "second") %>%
+  filter(classifier_type != "zero") %>%
+  group_by(.dots=c("item_name", "response")) %>% 
+  tally(name = "count") %>%
+  mutate(freq = count / sum(count)) %>% 
+  top_n(n=1, wt = freq)
+  
+```
+
+```{r}
+# Question 3. Which specific classifier is available for each item (combination of q1 and q2)?
+# Create new data frame for combination of specific from q1 and q2
+
+# [NEED HELP]
+# first approach
+# start with first question
+# if general, delete row
+# replace with row with same participant_code, item_name, item_number == "second"
+data_combination <- subset(data, item_number == "first")
+for (row in data_combination) {
+  this_participant_code <- row$participant_code
+  this_item_name <- row$item_name
+  if (row$classifier_type != "general") {
+    
+  }
+}
+
+# second approach
+# start with specific classifiers
+# if repeat, delete item_number == "second"
+data_specific <- subset(data, classifier_type != "general")
+
+
 # count most frequently used CL and relative frequency, all classifiers, sorted by item
-CL_counts_all <- data %>% 
-  filter(item_number == "first") %>% 
+CL_both_all_specific <- data %>% ###correct to name of new data frame
   group_by(.dots=c("item_name", "response")) %>% 
   tally(name = "count") %>% 
   mutate(freq = count / sum(count))
 ```
 
 ```{r}
-# count most frequently used CL and relative frequency, specific classifiers only
-CL_counts_specific <- data %>% 
-  filter(item_number == "first") %>% 
+# alternative approach to Question 3
+# count most frequently used CL and relative frequency, specific classifiers only, from both questions
+CL_both_all_specific_2 <- data %>% 
+  filter(response != "个") %>%
   group_by(.dots=c("item_name", "response")) %>% 
   tally(name = "count") %>% 
-  mutate(freq = count / sum(count)) %>% 
-  top_n(n=2, wt = freq) %>% 
-  filter(response != "个") %>% 
+  mutate(freq = count / sum(count)) %>%
   top_n(n=1, wt = freq)
+
 ```
