@@ -28,9 +28,8 @@ data <- subset(data, Finished == "1")
 data <- subset(data, participant_code != "106") # participant did not use classifiers
 
 
-# keep ResponseId, participant_code, responses
+# remove columns: keep ResponseId, participant_code, responses
 data <- subset(data,select = c(ResponseId,participant_code,cabbage_2_qa:bow_4_qb))
-
 data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
 data <- data[order(data$participant_code),]
 
@@ -89,29 +88,25 @@ CL_second_top <- data %>%
 ```{r}
 # Question 3. Which specific classifier is available for each item (combination of q1 and q2)?
 # Create new data frame for combination of specific from q1 and q2
+data_first <- subset(data, item_number == "first")
+data_first <- subset(data_first, select = -c(classifier_type, item_number))
+data_first <- rename(data_first, response_first = response)
 
-# [NEED HELP]
-# first approach
-# start with first question
-# if general, delete row
-# replace with row with same participant_code, item_name, item_number == "second"
-data_combination <- subset(data, item_number == "first")
-for (row in data_combination) {
-  this_participant_code <- row$participant_code
-  this_item_name <- row$item_name
-  if (row$classifier_type != "general") {
-    
-  }
-}
+data_second <- subset(data, item_number == "second")
+data_second <- subset(data_second, select = -c(classifier_type, item_number))
+data_second <- rename(data_second, response_second = response)
 
-# second approach
-# start with specific classifiers
-# if repeat, delete item_number == "second"
-data_specific <- subset(data, classifier_type != "general")
+data_both <- merge(data_first, data_second, by = c("ResponseId","participant_code", "item_name"))
+data_both$response_both <- rep(NA, nrow(data_both))
+data_both$response_both <- as.factor(data_both$response_both)
 
+data_both$response_both <- ifelse(data_both$response_first != "个", data_both$response_first, data_both$response_second)
 
-# count most frequently used CL and relative frequency, all classifiers, sorted by item
-CL_both_all_specific <- data %>% ###correct to name of new data frame
+```
+
+```{r}
+# count most frequently used CL and relative frequency, both questions, sorted by item
+CL_both_all_specific <- data_both %>%
   group_by(.dots=c("item_name", "response")) %>% 
   tally(name = "count") %>% 
   mutate(freq = count / sum(count))
