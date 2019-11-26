@@ -97,19 +97,31 @@ data_second <- subset(data_second, select = -c(classifier_type, item_number))
 data_second <- rename(data_second, response_second = response)
 
 data_both <- merge(data_first, data_second, by = c("ResponseId","participant_code", "item_name"))
+data_both$response_first <- as.character(data_both$response_first)
+data_both$response_second <- as.character(data_both$response_second)
 data_both$response_both <- rep(NA, nrow(data_both))
-data_both$response_both <- as.factor(data_both$response_both)
-
 data_both$response_both <- ifelse(data_both$response_first != "个", data_both$response_first, data_both$response_second)
+
+data_both$response_first <- as.factor(data_both$response_first)
+data_both$response_second <- as.factor(data_both$response_second)
+data_both$response_both <- as.factor(data_both$response_both)
 
 ```
 
 ```{r}
-# count most frequently used CL and relative frequency, both questions, sorted by item
-CL_both_all_specific <- data_both %>%
-  group_by(.dots=c("item_name", "response")) %>% 
+# Question 3, cont.
+# from combined table, all specific classifiers available
+CL_both_specific_all <- data_both %>%
+  group_by(.dots=c("item_name", "response_both")) %>% 
   tally(name = "count") %>% 
   mutate(freq = count / sum(count))
+
+# from combined table, most common specific classifier
+CL_both_specific_top <- data_both %>%
+  group_by(.dots=c("item_name", "response_both")) %>% 
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count)) %>%
+  top_n(n=1, wt = freq)
 ```
 
 ```{r}
