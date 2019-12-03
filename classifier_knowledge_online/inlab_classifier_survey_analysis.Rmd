@@ -36,7 +36,9 @@ data <- data[order(data$participant_code),]
 # edit typos
 data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)
 data$item <- gsub("printer_4_qa.1","racket_4_qa",data$item)
+data$item <- gsub("printer_4_qb.1","racket_4_qb",data$item)
 data$item <- gsub("lighthouse_qb","lighthouse_2_qb",data$item)
+
 
 ```
 
@@ -106,6 +108,8 @@ data_both$response_first <- as.factor(data_both$response_first)
 data_both$response_second <- as.factor(data_both$response_second)
 data_both$response_both <- as.factor(data_both$response_both)
 
+write.csv(data_both, file = "combined_questions_classifier_knowledge_survey_inlab_20190429_20191025.csv", row.names = FALSE)
+
 ```
 
 ```{r}
@@ -127,11 +131,11 @@ CL_both_specific_top <- data_both %>%
 ```{r}
 # alternative approach to Question 3
 # count most frequently used CL and relative frequency, specific classifiers only, from both questions
-CL_both_all_specific_2 <- data %>% 
-  filter(response != "个") %>%
-  group_by(.dots=c("item_name", "response")) %>% 
-  tally(name = "count") %>% 
-  mutate(freq = count / sum(count)) %>%
-  top_n(n=1, wt = freq)
+#CL_both_all_specific_2 <- data %>% 
+#  filter(response != "个") %>%
+#  group_by(.dots=c("item_name", "response")) %>% 
+#  tally(name = "count") %>% 
+#  mutate(freq = count / sum(count)) %>%
+#  top_n(n=1, wt = freq)
 
 ```
