@@ -1760,90 +1760,160 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmF3X2RhdGEgPC0gcmVhZC5jc3YoXCJjbGFzc2lmaWVyX2tub3dsZWRnZV9zdXJ2ZXlfaW5sYWJfMjAxOTA0MjlfMjAxOTEwMjUuY3N2XCIsIGVuY29kaW5nPVwiVVRGLThcIilcblxuZGF0YSA8LSByYXdfZGF0YVxuYGBgIn0= -->
-<pre class="r"><code>raw_data &lt;- read.csv(&quot;classifier_knowledge_survey_inlab_20190429_20191025.csv&quot;, encoding=&quot;UTF-8&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmF3X2RhdGFfaW5sYWIgPC0gcmVhZC5jc3YoXCJjbGFzc2lmaWVyX2tub3dsZWRnZV9zdXJ2ZXlfaW5sYWJfMjAxOTA0MjlfMjAxOTEwMjUuY3N2XCIsIGVuY29kaW5nPVwiVVRGLThcIilcblxuZGF0YSA8LSByYXdfZGF0YV9pbmxhYlxuYGBgIn0= -->
+<pre class="r"><code>raw_data_inlab &lt;- read.csv(&quot;classifier_knowledge_survey_inlab_20190429_20191025.csv&quot;, encoding=&quot;UTF-8&quot;)
 
-data &lt;- raw_data</code></pre>
+data &lt;- raw_data_inlab</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGV4Y2x1ZGUgcGVvcGxlXG5kYXRhIDwtIGRhdGFbLWMoMSwyKSxdICMgcmVtb3ZlIGNvbHVtbiBuYW1lIGFuZCBkZXNjcmlwdGlvblxuZGF0YSA8LSBzdWJzZXQoZGF0YSwgU3RhdHVzICE9IFwiU3VydmV5IFByZXZpZXdcIilcbmRhdGEgPC0gc3Vic2V0KGRhdGEsIEZpbmlzaGVkID09IFwiVHJ1ZVwiKVxuZGF0YSA8LSBkYXRhW2dyZXAoXCLmma7pgJror50v5Zu96K+tXCIsZGF0YSRuYXRpdmUpLF1cbmRhdGEgPC0gc3Vic2V0KGRhdGEsIHJlc2lkZW5jZSA9PSBcIuS4reWbveWkp+mZhlwiKVxuZGF0YSA8LSBzdWJzZXQoZGF0YSwgUmVzcG9uc2VJZCAhPSBcIlJfM3NkcDBucFg1bWdWekhHXCIpICMgcGFydGljaXBhbnQgZGlkIG5vdCB1c2UgY2xhc3NpZmllcnNcblxuZGF0YSA8LSBkYXRhW2MoOSwyMCwyNDoxNTEpXSAjIGtlZXAgUmVzcG9uc2VJZCwgbmF0aXZlLCByZXNwb25zZXNcblxuZGF0YSA8LSBnYXRoZXIoZGF0YSwgaXRlbSwgcmVzcG9uc2UsIFwiY2FiYmFnZV8yX3FhXCI6XCJib3dfNF9xYlwiKVxuZGF0YSA8LSBkYXRhW29yZGVyKGRhdGEkUmVzcG9uc2VJZCksXVxuXG5kYXRhJGl0ZW0gPC0gZ3N1YihcImJyYWNlbGV0XzNfcWEuMVwiLFwiYnJhY2VsZXRfM19xYlwiLGRhdGEkaXRlbSkjIGVkaXQgdHlwb1xuXG4jIGNyZWF0ZSBjb2x1bW4gaXRlbV9udW1iZXI6IGE9Zmlyc3QsIGI9c2Vjb25kXG5kYXRhJGl0ZW1fbnVtYmVyIDwtIGlmZWxzZShncmVwbChcInFhXCIsZGF0YSRpdGVtKSwgXCJmaXJzdFwiLCBcInNlY29uZFwiKVxuXG4jIGNyZWF0ZSBjb2x1bW4gaXRlbV9uYW1lOiBlLmcuIGNhYmJhZ2VfMlxuZGF0YSA8LSBzZXBhcmF0ZShkYXRhLCBpdGVtLCBjKFwiaXRlbV9uYW1lXCIpLCBcIigoX3EpKVwiLCBleHRyYSA9IFwiZHJvcFwiKVxuXG4jIHNlcGFyYXRlXG4jZGF0YSA8LSBzcHJlYWQoZGF0YSwgaXRlbV9udW1iZXIsIHJlc3BvbnNlKVxuIyMgZG9lcyBub3Qgd29yayBiZWNhdXNlIGVhY2ggaXRlbSBhcHBlYXJzIG11bHRpcGxlIHRpbWVzIGZvciBlYWNoIHBhcnRpY2lwYW50P1xuIyMgbGVhdmUgYXMgaXMgaW4gbG9uZyBmb3JtYXQgNS8xMy8xOVxuXG4jIGFkZCBjb2x1bW4gZm9yIGNsYXNzaWZpZXJfdHlwZS0gZ2VuZXJhbCBvciBzcGVjaWZpY1xuZGF0YSRjbGFzc2lmaWVyX3R5cGUgPC0gaWZlbHNlKGRhdGEkcmVzcG9uc2UgPT0gXCLkuKpcIiwgXCJnZW5lcmFsXCIsIFwic3BlY2lmaWNcIilcbiMjIHdoYXQgdG8gZG8gZm9yICfmsqHmnIknIG9yIGJsYW5rP1xuIyMgbGVhdmUgZm9yIG5vdywgaWdub3JlIHNlY29uZCBxdWVzdGlvbnMgNS8xMy8xOVxuXG4jIGNvbnZlcnQgaXRlbV9uYW1lLCByZXNwb25zZSwgaXRlbV9udW1iZXIsIGNsYXNzaWZpZXJfdHlwZSB0byBmYWN0b3JcbmRhdGEkaXRlbV9uYW1lIDwtIGFzLmZhY3RvcihkYXRhJGl0ZW1fbmFtZSlcbmRhdGEkcmVzcG9uc2UgPC1hcy5mYWN0b3IoZGF0YSRyZXNwb25zZSlcbmRhdGEkaXRlbV9udW1iZXIgPC0gYXMuZmFjdG9yKGRhdGEkaXRlbV9udW1iZXIpXG5kYXRhJGNsYXNzaWZpZXJfdHlwZSA8LSBhcy5mYWN0b3IoZGF0YSRjbGFzc2lmaWVyX3R5cGUpXG5kYXRhIDwtIGRyb3BsZXZlbHMoZGF0YSlcblxuIyBjb3VudCBtb3N0IGZyZXF1ZW50bHkgdXNlZCBDTCBhbmQgcmVsYXRpdmUgZnJlcXVlbmN5LCBzb3J0ZWQgYnkgY291bnRcbkNMX2NvdW50cyA8LSBkYXRhICU+JSBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gXCJmaXJzdFwiKSAlPiUgXG4gIGdyb3VwX2J5KC5kb3RzPWMoXCJpdGVtX25hbWVcIiwgXCJyZXNwb25zZVwiKSkgJT4lIFxuICB0YWxseShzb3J0ID0gVFJVRSwgbmFtZSA9IFwiY291bnRcIikgJT4lIFxuICBtdXRhdGUoZnJlcSA9IGNvdW50IC8gc3VtKGNvdW50KSkgJT4lIFxuICB0b3BfbihuPTEsIHd0ID0gZnJlcSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGV4Y2x1ZGUgcGVvcGxlXG5kYXRhIDwtIGRhdGFbLWMoMSwyKSxdICMgcmVtb3ZlIGNvbHVtbiBuYW1lIGFuZCBkZXNjcmlwdGlvblxuZGF0YSA8LSBzdWJzZXQoZGF0YSwgU3RhdHVzICE9IFwiU3VydmV5IFByZXZpZXdcIilcbmRhdGEgPC0gc3Vic2V0KGRhdGEsIEZpbmlzaGVkID09IFwiMVwiKVxuZGF0YSA8LSBzdWJzZXQoZGF0YSwgcGFydGljaXBhbnRfY29kZSAhPSBcIjEwNlwiKSAjIHBhcnRpY2lwYW50IGRpZCBub3QgdXNlIGNsYXNzaWZpZXJzXG5cblxuIyByZW1vdmUgY29sdW1uczoga2VlcCBSZXNwb25zZUlkLCBwYXJ0aWNpcGFudF9jb2RlLCByZXNwb25zZXNcbmRhdGEgPC0gc3Vic2V0KGRhdGEsc2VsZWN0ID0gYyhSZXNwb25zZUlkLHBhcnRpY2lwYW50X2NvZGUsY2FiYmFnZV8yX3FhOmJvd180X3FiKSlcbmRhdGEgPC0gZ2F0aGVyKGRhdGEsIGl0ZW0sIHJlc3BvbnNlLCBcImNhYmJhZ2VfMl9xYVwiOlwiYm93XzRfcWJcIilcbmBgYCJ9 -->
 <pre class="r"><code>
 # exclude people
 data &lt;- data[-c(1,2),] # remove column name and description
 data &lt;- subset(data, Status != &quot;Survey Preview&quot;)
-data &lt;- subset(data, Finished == &quot;True&quot;)
-data &lt;- data[grep(&quot;普通话/国语&quot;,data$native),]
-data &lt;- subset(data, residence == &quot;中国大陆&quot;)
-data &lt;- subset(data, ResponseId != &quot;R_3sdp0npX5mgVzHG&quot;) # participant did not use classifiers
+data &lt;- subset(data, Finished == &quot;1&quot;)
+data &lt;- subset(data, participant_code != &quot;106&quot;) # participant did not use classifiers
 
-data &lt;- data[c(9,20,24:151)] # keep ResponseId, native, responses
 
-data &lt;- gather(data, item, response, &quot;cabbage_2_qa&quot;:&quot;bow_4_qb&quot;)
-data &lt;- data[order(data$ResponseId),]
+# remove columns: keep ResponseId, participant_code, responses
+data &lt;- subset(data,select = c(ResponseId,participant_code,cabbage_2_qa:bow_4_qb))
+data &lt;- gather(data, item, response, &quot;cabbage_2_qa&quot;:&quot;bow_4_qb&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiYXR0cmlidXRlcyBhcmUgbm90IGlkZW50aWNhbCBhY3Jvc3MgbWVhc3VyZSB2YXJpYWJsZXM7XG50aGV5IHdpbGwgYmUgZHJvcHBlZFxuIn0= -->
+<pre><code>attributes are not identical across measure variables;
+they will be dropped</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YSA8LSBkYXRhW29yZGVyKGRhdGEkcGFydGljaXBhbnRfY29kZSksXVxuXG4jIGVkaXQgdHlwb3NcbmRhdGEkaXRlbSA8LSBnc3ViKFwiYnJhY2VsZXRfM19xYS4xXCIsXCJicmFjZWxldF8zX3FiXCIsZGF0YSRpdGVtKVxuZGF0YSRpdGVtIDwtIGdzdWIoXCJwcmludGVyXzRfcWEuMVwiLFwicmFja2V0XzRfcWFcIixkYXRhJGl0ZW0pXG5kYXRhJGl0ZW0gPC0gZ3N1YihcInByaW50ZXJfNF9xYi4xXCIsXCJyYWNrZXRfNF9xYlwiLGRhdGEkaXRlbSlcbmRhdGEkaXRlbSA8LSBnc3ViKFwibGlnaHRob3VzZV9xYlwiLFwibGlnaHRob3VzZV8yX3FiXCIsZGF0YSRpdGVtKVxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>data &lt;- data[order(data$participant_code),]
 
-data$item &lt;- gsub(&quot;bracelet_3_qa.1&quot;,&quot;bracelet_3_qb&quot;,data$item)# edit typo
-
+# edit typos
+data$item &lt;- gsub(&quot;bracelet_3_qa.1&quot;,&quot;bracelet_3_qb&quot;,data$item)
+data$item &lt;- gsub(&quot;printer_4_qa.1&quot;,&quot;racket_4_qa&quot;,data$item)
+data$item &lt;- gsub(&quot;printer_4_qb.1&quot;,&quot;racket_4_qb&quot;,data$item)
+data$item &lt;- gsub(&quot;lighthouse_qb&quot;,&quot;lighthouse_2_qb&quot;,data$item)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGNyZWF0ZSBjb2x1bW4gaXRlbV9udW1iZXI6IGE9Zmlyc3QsIGI9c2Vjb25kXG5kYXRhJGl0ZW1fbnVtYmVyIDwtIGlmZWxzZShncmVwbChcInFhXCIsZGF0YSRpdGVtKSwgXCJmaXJzdFwiLCBcInNlY29uZFwiKVxuXG4jIGNyZWF0ZSBjb2x1bW4gaXRlbV9uYW1lOiBlLmcuIGNhYmJhZ2VfMlxuZGF0YSA8LSBzZXBhcmF0ZShkYXRhLCBpdGVtLCBjKFwiaXRlbV9uYW1lXCIpLCBcIigoX3EpKVwiLCBleHRyYSA9IFwiZHJvcFwiKVxuXG4jIGFkZCBjb2x1bW4gZm9yIGNsYXNzaWZpZXJfdHlwZS0gZ2VuZXJhbCBvciBzcGVjaWZpYyBvciB6ZXJvXG5kYXRhJGNsYXNzaWZpZXJfdHlwZSA8LSBpZmVsc2UoZGF0YSRyZXNwb25zZSA9PSBcIuS4qlwiLCBcImdlbmVyYWxcIixcInNwZWNpZmljXCIpXG5kYXRhJGNsYXNzaWZpZXJfdHlwZVtkYXRhJHJlc3BvbnNlID09IFwi5rKh5pyJXCJdIDwtIFwiemVyb1wiXG5cbiMgY29udmVydCBpdGVtX25hbWUsIHJlc3BvbnNlLCBpdGVtX251bWJlciwgY2xhc3NpZmllcl90eXBlIHRvIGZhY3RvclxuZGF0YSRpdGVtX25hbWUgPC0gYXMuZmFjdG9yKGRhdGEkaXRlbV9uYW1lKVxuZGF0YSRyZXNwb25zZSA8LWFzLmZhY3RvcihkYXRhJHJlc3BvbnNlKVxuZGF0YSRpdGVtX251bWJlciA8LSBhcy5mYWN0b3IoZGF0YSRpdGVtX251bWJlcilcbmRhdGEkY2xhc3NpZmllcl90eXBlIDwtIGFzLmZhY3RvcihkYXRhJGNsYXNzaWZpZXJfdHlwZSlcbmRhdGEgPC0gZHJvcGxldmVscyhkYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>
 # create column item_number: a=first, b=second
 data$item_number &lt;- ifelse(grepl(&quot;qa&quot;,data$item), &quot;first&quot;, &quot;second&quot;)
 
 # create column item_name: e.g. cabbage_2
 data &lt;- separate(data, item, c(&quot;item_name&quot;), &quot;((_q))&quot;, extra = &quot;drop&quot;)
 
-# separate
-#data &lt;- spread(data, item_number, response)
-## does not work because each item appears multiple times for each participant?
-## leave as is in long format 5/13/19
-
-# add column for classifier_type- general or specific
-data$classifier_type &lt;- ifelse(data$response == &quot;个&quot;, &quot;general&quot;, &quot;specific&quot;)
-## what to do for '没有' or blank?
-## leave for now, ignore second questions 5/13/19
+# add column for classifier_type- general or specific or zero
+data$classifier_type &lt;- ifelse(data$response == &quot;个&quot;, &quot;general&quot;,&quot;specific&quot;)
+data$classifier_type[data$response == &quot;没有&quot;] &lt;- &quot;zero&quot;
 
 # convert item_name, response, item_number, classifier_type to factor
 data$item_name &lt;- as.factor(data$item_name)
 data$response &lt;-as.factor(data$response)
 data$item_number &lt;- as.factor(data$item_number)
 data$classifier_type &lt;- as.factor(data$classifier_type)
-data &lt;- droplevels(data)
-
-# count most frequently used CL and relative frequency, sorted by count
-CL_counts &lt;- data %&gt;% filter(item_number == &quot;first&quot;) %&gt;% 
-  group_by(.dots=c(&quot;item_name&quot;, &quot;response&quot;)) %&gt;% 
-  tally(sort = TRUE, name = &quot;count&quot;) %&gt;% 
-  mutate(freq = count / sum(count)) %&gt;% 
-  top_n(n=1, wt = freq)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCBtb3N0IGZyZXF1ZW50bHkgdXNlZCBDTCBhbmQgcmVsYXRpdmUgZnJlcXVlbmN5LCBhbGwgY2xhc3NpZmllcnMsIHNvcnRlZCBieSBpdGVtXG5DTF9jb3VudHNfYWxsIDwtIGRhdGEgJT4lIFxuICBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gXCJmaXJzdFwiKSAlPiUgXG4gIGdyb3VwX2J5KC5kb3RzPWMoXCJpdGVtX25hbWVcIiwgXCJyZXNwb25zZVwiKSkgJT4lIFxuICB0YWxseShuYW1lID0gXCJjb3VudFwiKSAlPiUgXG4gIG11dGF0ZShmcmVxID0gY291bnQgLyBzdW0oY291bnQpKVxuYGBgIn0= -->
-<pre class="r"><code># count most frequently used CL and relative frequency, all classifiers, sorted by item
-CL_counts_all &lt;- data %&gt;% 
-  filter(item_number == &quot;first&quot;) %&gt;% 
-  group_by(.dots=c(&quot;item_name&quot;, &quot;response&quot;)) %&gt;% 
-  tally(name = &quot;count&quot;) %&gt;% 
-  mutate(freq = count / sum(count))</code></pre>
+data &lt;- droplevels(data)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCBtb3N0IGZyZXF1ZW50bHkgdXNlZCBDTCBhbmQgcmVsYXRpdmUgZnJlcXVlbmN5LCBzcGVjaWZpYyBjbGFzc2lmaWVycyBvbmx5XG5DTF9jb3VudHNfc3BlY2lmaWMgPC0gZGF0YSAlPiUgXG4gIGZpbHRlcihpdGVtX251bWJlciA9PSBcImZpcnN0XCIpICU+JSBcbiAgZ3JvdXBfYnkoLmRvdHM9YyhcIml0ZW1fbmFtZVwiLCBcInJlc3BvbnNlXCIpKSAlPiUgXG4gIHRhbGx5KG5hbWUgPSBcImNvdW50XCIpICU+JSBcbiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpICU+JSBcbiAgdG9wX24obj0yLCB3dCA9IGZyZXEpICU+JSBcbiAgZmlsdGVyKHJlc3BvbnNlICE9IFwi5LiqXCIpICU+JSBcbiAgdG9wX24obj0xLCB3dCA9IGZyZXEpXG5gYGAifQ== -->
-<pre class="r"><code># count most frequently used CL and relative frequency, specific classifiers only
-CL_counts_specific &lt;- data %&gt;% 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBRdWVzdGlvbiAxLiBXaGF0IGlzIHRoZSBwcmVmZXJyZWQgY2xhc3NpZmllciBmb3IgZWFjaCBpdGVtIChmaXJzdCBxdWVzdGlvbik/XG4jIGNvdW50IG1vc3QgZnJlcXVlbnRseSB1c2VkIENMIGFuZCByZWxhdGl2ZSBmcmVxdWVuY3ksIGFsbCBjbGFzc2lmaWVycywgc29ydGVkIGJ5IGl0ZW1cbkNMX2ZpcnN0X2FsbCA8LSBkYXRhICU+JSBcbiAgZmlsdGVyKGl0ZW1fbnVtYmVyID09IFwiZmlyc3RcIikgJT4lIFxuICBncm91cF9ieSguZG90cz1jKFwiaXRlbV9uYW1lXCIsIFwicmVzcG9uc2VcIikpICU+JSBcbiAgdGFsbHkobmFtZSA9IFwiY291bnRcIikgJT4lIFxuICBtdXRhdGUoZnJlcSA9IGNvdW50IC8gc3VtKGNvdW50KSlcbiNob3cgdG8gb3JkZXIgYnkgY291bnQgZm9yIGVhY2ggaXRlbT9cblxuYGBgIn0= -->
+<pre class="r"><code># Question 1. What is the preferred classifier for each item (first question)?
+# count most frequently used CL and relative frequency, all classifiers, sorted by item
+CL_first_all &lt;- data %&gt;% 
   filter(item_number == &quot;first&quot;) %&gt;% 
   group_by(.dots=c(&quot;item_name&quot;, &quot;response&quot;)) %&gt;% 
   tally(name = &quot;count&quot;) %&gt;% 
+  mutate(freq = count / sum(count))
+#how to order by count for each item?
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBRdWVzdGlvbiAyLiBXaGF0IGlzIHRoZSBtb3N0IGZyZXF1ZW50bHkgcHJvZHVjZWQgY2xhc3NpZmllciBpbiB0aGUgc2Vjb25kIHF1ZXN0aW9uP1xuQ0xfc2Vjb25kX3RvcCA8LSBkYXRhICU+JVxuICBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gXCJzZWNvbmRcIikgJT4lXG4gIGZpbHRlcihjbGFzc2lmaWVyX3R5cGUgIT0gXCJ6ZXJvXCIpICU+JVxuICBncm91cF9ieSguZG90cz1jKFwiaXRlbV9uYW1lXCIsIFwicmVzcG9uc2VcIikpICU+JSBcbiAgdGFsbHkobmFtZSA9IFwiY291bnRcIikgJT4lXG4gIG11dGF0ZShmcmVxID0gY291bnQgLyBzdW0oY291bnQpKSAlPiUgXG4gIHRvcF9uKG49MSwgd3QgPSBmcmVxKVxuICBcbmBgYCJ9 -->
+<pre class="r"><code># Question 2. What is the most frequently produced classifier in the second question?
+CL_second_top &lt;- data %&gt;%
+  filter(item_number == &quot;second&quot;) %&gt;%
+  filter(classifier_type != &quot;zero&quot;) %&gt;%
+  group_by(.dots=c(&quot;item_name&quot;, &quot;response&quot;)) %&gt;% 
+  tally(name = &quot;count&quot;) %&gt;%
   mutate(freq = count / sum(count)) %&gt;% 
-  top_n(n=2, wt = freq) %&gt;% 
-  filter(response != &quot;个&quot;) %&gt;% 
+  top_n(n=1, wt = freq)
+  </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBRdWVzdGlvbiAzLiBXaGljaCBzcGVjaWZpYyBjbGFzc2lmaWVyIGlzIGF2YWlsYWJsZSBmb3IgZWFjaCBpdGVtIChjb21iaW5hdGlvbiBvZiBxMSBhbmQgcTIpP1xuIyBDcmVhdGUgbmV3IGRhdGEgZnJhbWUgZm9yIGNvbWJpbmF0aW9uIG9mIHNwZWNpZmljIGZyb20gcTEgYW5kIHEyXG5kYXRhX2ZpcnN0IDwtIHN1YnNldChkYXRhLCBpdGVtX251bWJlciA9PSBcImZpcnN0XCIpXG5kYXRhX2ZpcnN0IDwtIHN1YnNldChkYXRhX2ZpcnN0LCBzZWxlY3QgPSAtYyhjbGFzc2lmaWVyX3R5cGUsIGl0ZW1fbnVtYmVyKSlcbmRhdGFfZmlyc3QgPC0gcmVuYW1lKGRhdGFfZmlyc3QsIHJlc3BvbnNlX2ZpcnN0ID0gcmVzcG9uc2UpXG5cbmRhdGFfc2Vjb25kIDwtIHN1YnNldChkYXRhLCBpdGVtX251bWJlciA9PSBcInNlY29uZFwiKVxuZGF0YV9zZWNvbmQgPC0gc3Vic2V0KGRhdGFfc2Vjb25kLCBzZWxlY3QgPSAtYyhjbGFzc2lmaWVyX3R5cGUsIGl0ZW1fbnVtYmVyKSlcbmRhdGFfc2Vjb25kIDwtIHJlbmFtZShkYXRhX3NlY29uZCwgcmVzcG9uc2Vfc2Vjb25kID0gcmVzcG9uc2UpXG5cbmRhdGFfYm90aCA8LSBtZXJnZShkYXRhX2ZpcnN0LCBkYXRhX3NlY29uZCwgYnkgPSBjKFwiUmVzcG9uc2VJZFwiLFwicGFydGljaXBhbnRfY29kZVwiLCBcIml0ZW1fbmFtZVwiKSlcbmRhdGFfYm90aCRyZXNwb25zZV9maXJzdCA8LSBhcy5jaGFyYWN0ZXIoZGF0YV9ib3RoJHJlc3BvbnNlX2ZpcnN0KVxuZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZCA8LSBhcy5jaGFyYWN0ZXIoZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZClcbmRhdGFfYm90aCRyZXNwb25zZV9ib3RoIDwtIHJlcChOQSwgbnJvdyhkYXRhX2JvdGgpKVxuZGF0YV9ib3RoJHJlc3BvbnNlX2JvdGggPC0gaWZlbHNlKGRhdGFfYm90aCRyZXNwb25zZV9maXJzdCAhPSBcIuS4qlwiLCBkYXRhX2JvdGgkcmVzcG9uc2VfZmlyc3QsIGRhdGFfYm90aCRyZXNwb25zZV9zZWNvbmQpXG5cbmRhdGFfYm90aCRyZXNwb25zZV9maXJzdCA8LSBhcy5mYWN0b3IoZGF0YV9ib3RoJHJlc3BvbnNlX2ZpcnN0KVxuZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZCA8LSBhcy5mYWN0b3IoZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZClcbmRhdGFfYm90aCRyZXNwb25zZV9ib3RoIDwtIGFzLmZhY3RvcihkYXRhX2JvdGgkcmVzcG9uc2VfYm90aClcblxud3JpdGUuY3N2KGRhdGFfYm90aCwgZmlsZSA9IFwiY29tYmluZWRfcXVlc3Rpb25zX2NsYXNzaWZpZXJfa25vd2xlZGdlX3N1cnZleV9pbmxhYl8yMDE5MDQyOV8yMDE5MTAyNS5jc3ZcIiwgcm93Lm5hbWVzID0gRkFMU0UpXG5cbmBgYCJ9 -->
+<pre class="r"><code># Question 3. Which specific classifier is available for each item (combination of q1 and q2)?
+# Create new data frame for combination of specific from q1 and q2
+data_first &lt;- subset(data, item_number == &quot;first&quot;)
+data_first &lt;- subset(data_first, select = -c(classifier_type, item_number))
+data_first &lt;- rename(data_first, response_first = response)
+
+data_second &lt;- subset(data, item_number == &quot;second&quot;)
+data_second &lt;- subset(data_second, select = -c(classifier_type, item_number))
+data_second &lt;- rename(data_second, response_second = response)
+
+data_both &lt;- merge(data_first, data_second, by = c(&quot;ResponseId&quot;,&quot;participant_code&quot;, &quot;item_name&quot;))
+data_both$response_first &lt;- as.character(data_both$response_first)
+data_both$response_second &lt;- as.character(data_both$response_second)
+data_both$response_both &lt;- rep(NA, nrow(data_both))
+data_both$response_both &lt;- ifelse(data_both$response_first != &quot;个&quot;, data_both$response_first, data_both$response_second)
+
+data_both$response_first &lt;- as.factor(data_both$response_first)
+data_both$response_second &lt;- as.factor(data_both$response_second)
+data_both$response_both &lt;- as.factor(data_both$response_both)
+
+write.csv(data_both, file = &quot;combined_questions_classifier_knowledge_survey_inlab_20190429_20191025.csv&quot;, row.names = FALSE)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBRdWVzdGlvbiAzLCBjb250LlxuIyBmcm9tIGNvbWJpbmVkIHRhYmxlLCBhbGwgc3BlY2lmaWMgY2xhc3NpZmllcnMgYXZhaWxhYmxlXG5DTF9ib3RoX3NwZWNpZmljX2FsbCA8LSBkYXRhX2JvdGggJT4lXG4gIGdyb3VwX2J5KC5kb3RzPWMoXCJpdGVtX25hbWVcIiwgXCJyZXNwb25zZV9ib3RoXCIpKSAlPiUgXG4gIHRhbGx5KG5hbWUgPSBcImNvdW50XCIpICU+JSBcbiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpXG5cbiMgZnJvbSBjb21iaW5lZCB0YWJsZSwgbW9zdCBjb21tb24gc3BlY2lmaWMgY2xhc3NpZmllclxuQ0xfYm90aF9zcGVjaWZpY190b3AgPC0gZGF0YV9ib3RoICU+JVxuICBncm91cF9ieSguZG90cz1jKFwiaXRlbV9uYW1lXCIsIFwicmVzcG9uc2VfYm90aFwiKSkgJT4lIFxuICB0YWxseShuYW1lID0gXCJjb3VudFwiKSAlPiUgXG4gIG11dGF0ZShmcmVxID0gY291bnQgLyBzdW0oY291bnQpKSAlPiVcbiAgdG9wX24obj0xLCB3dCA9IGZyZXEpXG5gYGAifQ== -->
+<pre class="r"><code># Question 3, cont.
+# from combined table, all specific classifiers available
+CL_both_specific_all &lt;- data_both %&gt;%
+  group_by(.dots=c(&quot;item_name&quot;, &quot;response_both&quot;)) %&gt;% 
+  tally(name = &quot;count&quot;) %&gt;% 
+  mutate(freq = count / sum(count))
+
+# from combined table, most common specific classifier
+CL_both_specific_top &lt;- data_both %&gt;%
+  group_by(.dots=c(&quot;item_name&quot;, &quot;response_both&quot;)) %&gt;% 
+  tally(name = &quot;count&quot;) %&gt;% 
+  mutate(freq = count / sum(count)) %&gt;%
   top_n(n=1, wt = freq)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhbHRlcm5hdGl2ZSBhcHByb2FjaCB0byBRdWVzdGlvbiAzXG4jIGNvdW50IG1vc3QgZnJlcXVlbnRseSB1c2VkIENMIGFuZCByZWxhdGl2ZSBmcmVxdWVuY3ksIHNwZWNpZmljIGNsYXNzaWZpZXJzIG9ubHksIGZyb20gYm90aCBxdWVzdGlvbnNcbkNMX2JvdGhfYWxsX3NwZWNpZmljXzIgPC0gZGF0YSAlPiUgXG4gIGZpbHRlcihyZXNwb25zZSAhPSBcIuS4qlwiKSAlPiVcbiAgZ3JvdXBfYnkoLmRvdHM9YyhcIml0ZW1fbmFtZVwiLCBcInJlc3BvbnNlXCIpKSAlPiUgXG4gIHRhbGx5KG5hbWUgPSBcImNvdW50XCIpICU+JSBcbiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpICU+JVxuICB0b3BfbihuPTEsIHd0ID0gZnJlcSlcblxuYGBgIn0= -->
+<pre class="r"><code># alternative approach to Question 3
+# count most frequently used CL and relative frequency, specific classifiers only, from both questions
+CL_both_all_specific_2 &lt;- data %&gt;% 
+  filter(response != &quot;个&quot;) %&gt;%
+  group_by(.dots=c(&quot;item_name&quot;, &quot;response&quot;)) %&gt;% 
+  tally(name = &quot;count&quot;) %&gt;% 
+  mutate(freq = count / sum(count)) %&gt;%
+  top_n(n=1, wt = freq)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW5sYWIgQ2xhc3NpZmllciBTdXJ2ZXkgQW5hbHlzaXMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KClRoaXMgaXMgYW4gW1IgTWFya2Rvd25dKGh0dHA6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20pIE5vdGVib29rLiBXaGVuIHlvdSBleGVjdXRlIGNvZGUgd2l0aGluIHRoZSBub3RlYm9vaywgdGhlIHJlc3VsdHMgYXBwZWFyIGJlbmVhdGggdGhlIGNvZGUuIAoKVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCgoKYGBge3J9CnJhd19kYXRhIDwtIHJlYWQuY3N2KCJjbGFzc2lmaWVyX2tub3dsZWRnZV9zdXJ2ZXlfaW5sYWJfMjAxOTA0MjlfMjAxOTEwMjUuY3N2IiwgZW5jb2Rpbmc9IlVURi04IikKCmRhdGEgPC0gcmF3X2RhdGEKYGBgCgoKYGBge3J9CgojIGV4Y2x1ZGUgcGVvcGxlCmRhdGEgPC0gZGF0YVstYygxLDIpLF0gIyByZW1vdmUgY29sdW1uIG5hbWUgYW5kIGRlc2NyaXB0aW9uCmRhdGEgPC0gc3Vic2V0KGRhdGEsIFN0YXR1cyAhPSAiU3VydmV5IFByZXZpZXciKQpkYXRhIDwtIHN1YnNldChkYXRhLCBGaW5pc2hlZCA9PSAiVHJ1ZSIpCmRhdGEgPC0gZGF0YVtncmVwKCLmma7pgJror50v5Zu96K+tIixkYXRhJG5hdGl2ZSksXQpkYXRhIDwtIHN1YnNldChkYXRhLCByZXNpZGVuY2UgPT0gIuS4reWbveWkp+mZhiIpCmRhdGEgPC0gc3Vic2V0KGRhdGEsIFJlc3BvbnNlSWQgIT0gIlJfM3NkcDBucFg1bWdWekhHIikgIyBwYXJ0aWNpcGFudCBkaWQgbm90IHVzZSBjbGFzc2lmaWVycwoKZGF0YSA8LSBkYXRhW2MoOSwyMCwyNDoxNTEpXSAjIGtlZXAgUmVzcG9uc2VJZCwgbmF0aXZlLCByZXNwb25zZXMKCmRhdGEgPC0gZ2F0aGVyKGRhdGEsIGl0ZW0sIHJlc3BvbnNlLCAiY2FiYmFnZV8yX3FhIjoiYm93XzRfcWIiKQpkYXRhIDwtIGRhdGFbb3JkZXIoZGF0YSRSZXNwb25zZUlkKSxdCgpkYXRhJGl0ZW0gPC0gZ3N1YigiYnJhY2VsZXRfM19xYS4xIiwiYnJhY2VsZXRfM19xYiIsZGF0YSRpdGVtKSMgZWRpdCB0eXBvCgojIGNyZWF0ZSBjb2x1bW4gaXRlbV9udW1iZXI6IGE9Zmlyc3QsIGI9c2Vjb25kCmRhdGEkaXRlbV9udW1iZXIgPC0gaWZlbHNlKGdyZXBsKCJxYSIsZGF0YSRpdGVtKSwgImZpcnN0IiwgInNlY29uZCIpCgojIGNyZWF0ZSBjb2x1bW4gaXRlbV9uYW1lOiBlLmcuIGNhYmJhZ2VfMgpkYXRhIDwtIHNlcGFyYXRlKGRhdGEsIGl0ZW0sIGMoIml0ZW1fbmFtZSIpLCAiKChfcSkpIiwgZXh0cmEgPSAiZHJvcCIpCgojIHNlcGFyYXRlCiNkYXRhIDwtIHNwcmVhZChkYXRhLCBpdGVtX251bWJlciwgcmVzcG9uc2UpCiMjIGRvZXMgbm90IHdvcmsgYmVjYXVzZSBlYWNoIGl0ZW0gYXBwZWFycyBtdWx0aXBsZSB0aW1lcyBmb3IgZWFjaCBwYXJ0aWNpcGFudD8KIyMgbGVhdmUgYXMgaXMgaW4gbG9uZyBmb3JtYXQgNS8xMy8xOQoKIyBhZGQgY29sdW1uIGZvciBjbGFzc2lmaWVyX3R5cGUtIGdlbmVyYWwgb3Igc3BlY2lmaWMKZGF0YSRjbGFzc2lmaWVyX3R5cGUgPC0gaWZlbHNlKGRhdGEkcmVzcG9uc2UgPT0gIuS4qiIsICJnZW5lcmFsIiwgInNwZWNpZmljIikKIyMgd2hhdCB0byBkbyBmb3IgJ+ayoeaciScgb3IgYmxhbms/CiMjIGxlYXZlIGZvciBub3csIGlnbm9yZSBzZWNvbmQgcXVlc3Rpb25zIDUvMTMvMTkKCiMgY29udmVydCBpdGVtX25hbWUsIHJlc3BvbnNlLCBpdGVtX251bWJlciwgY2xhc3NpZmllcl90eXBlIHRvIGZhY3RvcgpkYXRhJGl0ZW1fbmFtZSA8LSBhcy5mYWN0b3IoZGF0YSRpdGVtX25hbWUpCmRhdGEkcmVzcG9uc2UgPC1hcy5mYWN0b3IoZGF0YSRyZXNwb25zZSkKZGF0YSRpdGVtX251bWJlciA8LSBhcy5mYWN0b3IoZGF0YSRpdGVtX251bWJlcikKZGF0YSRjbGFzc2lmaWVyX3R5cGUgPC0gYXMuZmFjdG9yKGRhdGEkY2xhc3NpZmllcl90eXBlKQpkYXRhIDwtIGRyb3BsZXZlbHMoZGF0YSkKCiMgY291bnQgbW9zdCBmcmVxdWVudGx5IHVzZWQgQ0wgYW5kIHJlbGF0aXZlIGZyZXF1ZW5jeSwgc29ydGVkIGJ5IGNvdW50CkNMX2NvdW50cyA8LSBkYXRhICU+JSBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gImZpcnN0IikgJT4lIAogIGdyb3VwX2J5KC5kb3RzPWMoIml0ZW1fbmFtZSIsICJyZXNwb25zZSIpKSAlPiUgCiAgdGFsbHkoc29ydCA9IFRSVUUsIG5hbWUgPSAiY291bnQiKSAlPiUgCiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpICU+JSAKICB0b3BfbihuPTEsIHd0ID0gZnJlcSkKYGBgCmBgYHtyfQojIGNvdW50IG1vc3QgZnJlcXVlbnRseSB1c2VkIENMIGFuZCByZWxhdGl2ZSBmcmVxdWVuY3ksIGFsbCBjbGFzc2lmaWVycywgc29ydGVkIGJ5IGl0ZW0KQ0xfY291bnRzX2FsbCA8LSBkYXRhICU+JSAKICBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gImZpcnN0IikgJT4lIAogIGdyb3VwX2J5KC5kb3RzPWMoIml0ZW1fbmFtZSIsICJyZXNwb25zZSIpKSAlPiUgCiAgdGFsbHkobmFtZSA9ICJjb3VudCIpICU+JSAKICBtdXRhdGUoZnJlcSA9IGNvdW50IC8gc3VtKGNvdW50KSkKYGBgCgpgYGB7cn0KIyBjb3VudCBtb3N0IGZyZXF1ZW50bHkgdXNlZCBDTCBhbmQgcmVsYXRpdmUgZnJlcXVlbmN5LCBzcGVjaWZpYyBjbGFzc2lmaWVycyBvbmx5CkNMX2NvdW50c19zcGVjaWZpYyA8LSBkYXRhICU+JSAKICBmaWx0ZXIoaXRlbV9udW1iZXIgPT0gImZpcnN0IikgJT4lIAogIGdyb3VwX2J5KC5kb3RzPWMoIml0ZW1fbmFtZSIsICJyZXNwb25zZSIpKSAlPiUgCiAgdGFsbHkobmFtZSA9ICJjb3VudCIpICU+JSAKICBtdXRhdGUoZnJlcSA9IGNvdW50IC8gc3VtKGNvdW50KSkgJT4lIAogIHRvcF9uKG49Miwgd3QgPSBmcmVxKSAlPiUgCiAgZmlsdGVyKHJlc3BvbnNlICE9ICLkuKoiKSAlPiUgCiAgdG9wX24obj0xLCB3dCA9IGZyZXEpCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW5sYWIgQ2xhc3NpZmllciBTdXJ2ZXkgQW5hbHlzaXMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KClRoaXMgaXMgYW4gW1IgTWFya2Rvd25dKGh0dHA6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20pIE5vdGVib29rLiBXaGVuIHlvdSBleGVjdXRlIGNvZGUgd2l0aGluIHRoZSBub3RlYm9vaywgdGhlIHJlc3VsdHMgYXBwZWFyIGJlbmVhdGggdGhlIGNvZGUuIAoKVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiAKCmBgYHtyfQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCgoKYGBge3J9CnJhd19kYXRhX2lubGFiIDwtIHJlYWQuY3N2KCJjbGFzc2lmaWVyX2tub3dsZWRnZV9zdXJ2ZXlfaW5sYWJfMjAxOTA0MjlfMjAxOTEwMjUuY3N2IiwgZW5jb2Rpbmc9IlVURi04IikKCmRhdGEgPC0gcmF3X2RhdGFfaW5sYWIKYGBgCgoKYGBge3J9CgojIGV4Y2x1ZGUgcGVvcGxlCmRhdGEgPC0gZGF0YVstYygxLDIpLF0gIyByZW1vdmUgY29sdW1uIG5hbWUgYW5kIGRlc2NyaXB0aW9uCmRhdGEgPC0gc3Vic2V0KGRhdGEsIFN0YXR1cyAhPSAiU3VydmV5IFByZXZpZXciKQpkYXRhIDwtIHN1YnNldChkYXRhLCBGaW5pc2hlZCA9PSAiMSIpCmRhdGEgPC0gc3Vic2V0KGRhdGEsIHBhcnRpY2lwYW50X2NvZGUgIT0gIjEwNiIpICMgcGFydGljaXBhbnQgZGlkIG5vdCB1c2UgY2xhc3NpZmllcnMKCgojIHJlbW92ZSBjb2x1bW5zOiBrZWVwIFJlc3BvbnNlSWQsIHBhcnRpY2lwYW50X2NvZGUsIHJlc3BvbnNlcwpkYXRhIDwtIHN1YnNldChkYXRhLHNlbGVjdCA9IGMoUmVzcG9uc2VJZCxwYXJ0aWNpcGFudF9jb2RlLGNhYmJhZ2VfMl9xYTpib3dfNF9xYikpCmRhdGEgPC0gZ2F0aGVyKGRhdGEsIGl0ZW0sIHJlc3BvbnNlLCAiY2FiYmFnZV8yX3FhIjoiYm93XzRfcWIiKQpkYXRhIDwtIGRhdGFbb3JkZXIoZGF0YSRwYXJ0aWNpcGFudF9jb2RlKSxdCgojIGVkaXQgdHlwb3MKZGF0YSRpdGVtIDwtIGdzdWIoImJyYWNlbGV0XzNfcWEuMSIsImJyYWNlbGV0XzNfcWIiLGRhdGEkaXRlbSkKZGF0YSRpdGVtIDwtIGdzdWIoInByaW50ZXJfNF9xYS4xIiwicmFja2V0XzRfcWEiLGRhdGEkaXRlbSkKZGF0YSRpdGVtIDwtIGdzdWIoInByaW50ZXJfNF9xYi4xIiwicmFja2V0XzRfcWIiLGRhdGEkaXRlbSkKZGF0YSRpdGVtIDwtIGdzdWIoImxpZ2h0aG91c2VfcWIiLCJsaWdodGhvdXNlXzJfcWIiLGRhdGEkaXRlbSkKCgpgYGAKCmBgYHtyfQoKIyBjcmVhdGUgY29sdW1uIGl0ZW1fbnVtYmVyOiBhPWZpcnN0LCBiPXNlY29uZApkYXRhJGl0ZW1fbnVtYmVyIDwtIGlmZWxzZShncmVwbCgicWEiLGRhdGEkaXRlbSksICJmaXJzdCIsICJzZWNvbmQiKQoKIyBjcmVhdGUgY29sdW1uIGl0ZW1fbmFtZTogZS5nLiBjYWJiYWdlXzIKZGF0YSA8LSBzZXBhcmF0ZShkYXRhLCBpdGVtLCBjKCJpdGVtX25hbWUiKSwgIigoX3EpKSIsIGV4dHJhID0gImRyb3AiKQoKIyBhZGQgY29sdW1uIGZvciBjbGFzc2lmaWVyX3R5cGUtIGdlbmVyYWwgb3Igc3BlY2lmaWMgb3IgemVybwpkYXRhJGNsYXNzaWZpZXJfdHlwZSA8LSBpZmVsc2UoZGF0YSRyZXNwb25zZSA9PSAi5LiqIiwgImdlbmVyYWwiLCJzcGVjaWZpYyIpCmRhdGEkY2xhc3NpZmllcl90eXBlW2RhdGEkcmVzcG9uc2UgPT0gIuayoeaciSJdIDwtICJ6ZXJvIgoKIyBjb252ZXJ0IGl0ZW1fbmFtZSwgcmVzcG9uc2UsIGl0ZW1fbnVtYmVyLCBjbGFzc2lmaWVyX3R5cGUgdG8gZmFjdG9yCmRhdGEkaXRlbV9uYW1lIDwtIGFzLmZhY3RvcihkYXRhJGl0ZW1fbmFtZSkKZGF0YSRyZXNwb25zZSA8LWFzLmZhY3RvcihkYXRhJHJlc3BvbnNlKQpkYXRhJGl0ZW1fbnVtYmVyIDwtIGFzLmZhY3RvcihkYXRhJGl0ZW1fbnVtYmVyKQpkYXRhJGNsYXNzaWZpZXJfdHlwZSA8LSBhcy5mYWN0b3IoZGF0YSRjbGFzc2lmaWVyX3R5cGUpCmRhdGEgPC0gZHJvcGxldmVscyhkYXRhKQpgYGAKCgpgYGB7cn0KIyBRdWVzdGlvbiAxLiBXaGF0IGlzIHRoZSBwcmVmZXJyZWQgY2xhc3NpZmllciBmb3IgZWFjaCBpdGVtIChmaXJzdCBxdWVzdGlvbik/CiMgY291bnQgbW9zdCBmcmVxdWVudGx5IHVzZWQgQ0wgYW5kIHJlbGF0aXZlIGZyZXF1ZW5jeSwgYWxsIGNsYXNzaWZpZXJzLCBzb3J0ZWQgYnkgaXRlbQpDTF9maXJzdF9hbGwgPC0gZGF0YSAlPiUgCiAgZmlsdGVyKGl0ZW1fbnVtYmVyID09ICJmaXJzdCIpICU+JSAKICBncm91cF9ieSguZG90cz1jKCJpdGVtX25hbWUiLCAicmVzcG9uc2UiKSkgJT4lIAogIHRhbGx5KG5hbWUgPSAiY291bnQiKSAlPiUgCiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpCiNob3cgdG8gb3JkZXIgYnkgY291bnQgZm9yIGVhY2ggaXRlbT8KCmBgYAoKYGBge3J9CiMgUXVlc3Rpb24gMi4gV2hhdCBpcyB0aGUgbW9zdCBmcmVxdWVudGx5IHByb2R1Y2VkIGNsYXNzaWZpZXIgaW4gdGhlIHNlY29uZCBxdWVzdGlvbj8KQ0xfc2Vjb25kX3RvcCA8LSBkYXRhICU+JQogIGZpbHRlcihpdGVtX251bWJlciA9PSAic2Vjb25kIikgJT4lCiAgZmlsdGVyKGNsYXNzaWZpZXJfdHlwZSAhPSAiemVybyIpICU+JQogIGdyb3VwX2J5KC5kb3RzPWMoIml0ZW1fbmFtZSIsICJyZXNwb25zZSIpKSAlPiUgCiAgdGFsbHkobmFtZSA9ICJjb3VudCIpICU+JQogIG11dGF0ZShmcmVxID0gY291bnQgLyBzdW0oY291bnQpKSAlPiUgCiAgdG9wX24obj0xLCB3dCA9IGZyZXEpCiAgCmBgYAoKYGBge3J9CiMgUXVlc3Rpb24gMy4gV2hpY2ggc3BlY2lmaWMgY2xhc3NpZmllciBpcyBhdmFpbGFibGUgZm9yIGVhY2ggaXRlbSAoY29tYmluYXRpb24gb2YgcTEgYW5kIHEyKT8KIyBDcmVhdGUgbmV3IGRhdGEgZnJhbWUgZm9yIGNvbWJpbmF0aW9uIG9mIHNwZWNpZmljIGZyb20gcTEgYW5kIHEyCmRhdGFfZmlyc3QgPC0gc3Vic2V0KGRhdGEsIGl0ZW1fbnVtYmVyID09ICJmaXJzdCIpCmRhdGFfZmlyc3QgPC0gc3Vic2V0KGRhdGFfZmlyc3QsIHNlbGVjdCA9IC1jKGNsYXNzaWZpZXJfdHlwZSwgaXRlbV9udW1iZXIpKQpkYXRhX2ZpcnN0IDwtIHJlbmFtZShkYXRhX2ZpcnN0LCByZXNwb25zZV9maXJzdCA9IHJlc3BvbnNlKQoKZGF0YV9zZWNvbmQgPC0gc3Vic2V0KGRhdGEsIGl0ZW1fbnVtYmVyID09ICJzZWNvbmQiKQpkYXRhX3NlY29uZCA8LSBzdWJzZXQoZGF0YV9zZWNvbmQsIHNlbGVjdCA9IC1jKGNsYXNzaWZpZXJfdHlwZSwgaXRlbV9udW1iZXIpKQpkYXRhX3NlY29uZCA8LSByZW5hbWUoZGF0YV9zZWNvbmQsIHJlc3BvbnNlX3NlY29uZCA9IHJlc3BvbnNlKQoKZGF0YV9ib3RoIDwtIG1lcmdlKGRhdGFfZmlyc3QsIGRhdGFfc2Vjb25kLCBieSA9IGMoIlJlc3BvbnNlSWQiLCJwYXJ0aWNpcGFudF9jb2RlIiwgIml0ZW1fbmFtZSIpKQpkYXRhX2JvdGgkcmVzcG9uc2VfZmlyc3QgPC0gYXMuY2hhcmFjdGVyKGRhdGFfYm90aCRyZXNwb25zZV9maXJzdCkKZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZCA8LSBhcy5jaGFyYWN0ZXIoZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZCkKZGF0YV9ib3RoJHJlc3BvbnNlX2JvdGggPC0gcmVwKE5BLCBucm93KGRhdGFfYm90aCkpCmRhdGFfYm90aCRyZXNwb25zZV9ib3RoIDwtIGlmZWxzZShkYXRhX2JvdGgkcmVzcG9uc2VfZmlyc3QgIT0gIuS4qiIsIGRhdGFfYm90aCRyZXNwb25zZV9maXJzdCwgZGF0YV9ib3RoJHJlc3BvbnNlX3NlY29uZCkKCmRhdGFfYm90aCRyZXNwb25zZV9maXJzdCA8LSBhcy5mYWN0b3IoZGF0YV9ib3RoJHJlc3BvbnNlX2ZpcnN0KQpkYXRhX2JvdGgkcmVzcG9uc2Vfc2Vjb25kIDwtIGFzLmZhY3RvcihkYXRhX2JvdGgkcmVzcG9uc2Vfc2Vjb25kKQpkYXRhX2JvdGgkcmVzcG9uc2VfYm90aCA8LSBhcy5mYWN0b3IoZGF0YV9ib3RoJHJlc3BvbnNlX2JvdGgpCgp3cml0ZS5jc3YoZGF0YV9ib3RoLCBmaWxlID0gImNvbWJpbmVkX3F1ZXN0aW9uc19jbGFzc2lmaWVyX2tub3dsZWRnZV9zdXJ2ZXlfaW5sYWJfMjAxOTA0MjlfMjAxOTEwMjUuY3N2Iiwgcm93Lm5hbWVzID0gRkFMU0UpCgpgYGAKCmBgYHtyfQojIFF1ZXN0aW9uIDMsIGNvbnQuCiMgZnJvbSBjb21iaW5lZCB0YWJsZSwgYWxsIHNwZWNpZmljIGNsYXNzaWZpZXJzIGF2YWlsYWJsZQpDTF9ib3RoX3NwZWNpZmljX2FsbCA8LSBkYXRhX2JvdGggJT4lCiAgZ3JvdXBfYnkoLmRvdHM9YygiaXRlbV9uYW1lIiwgInJlc3BvbnNlX2JvdGgiKSkgJT4lIAogIHRhbGx5KG5hbWUgPSAiY291bnQiKSAlPiUgCiAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpCgojIGZyb20gY29tYmluZWQgdGFibGUsIG1vc3QgY29tbW9uIHNwZWNpZmljIGNsYXNzaWZpZXIKQ0xfYm90aF9zcGVjaWZpY190b3AgPC0gZGF0YV9ib3RoICU+JQogIGdyb3VwX2J5KC5kb3RzPWMoIml0ZW1fbmFtZSIsICJyZXNwb25zZV9ib3RoIikpICU+JSAKICB0YWxseShuYW1lID0gImNvdW50IikgJT4lIAogIG11dGF0ZShmcmVxID0gY291bnQgLyBzdW0oY291bnQpKSAlPiUKICB0b3BfbihuPTEsIHd0ID0gZnJlcSkKYGBgCgpgYGB7cn0KIyBhbHRlcm5hdGl2ZSBhcHByb2FjaCB0byBRdWVzdGlvbiAzCiMgY291bnQgbW9zdCBmcmVxdWVudGx5IHVzZWQgQ0wgYW5kIHJlbGF0aXZlIGZyZXF1ZW5jeSwgc3BlY2lmaWMgY2xhc3NpZmllcnMgb25seSwgZnJvbSBib3RoIHF1ZXN0aW9ucwojQ0xfYm90aF9hbGxfc3BlY2lmaWNfMiA8LSBkYXRhICU+JSAKIyAgZmlsdGVyKHJlc3BvbnNlICE9ICLkuKoiKSAlPiUKIyAgZ3JvdXBfYnkoLmRvdHM9YygiaXRlbV9uYW1lIiwgInJlc3BvbnNlIikpICU+JSAKIyAgdGFsbHkobmFtZSA9ICJjb3VudCIpICU+JSAKIyAgbXV0YXRlKGZyZXEgPSBjb3VudCAvIHN1bShjb3VudCkpICU+JQojICB0b3BfbihuPTEsIHd0ID0gZnJlcSkKCmBgYAo=</div>
 
 
 

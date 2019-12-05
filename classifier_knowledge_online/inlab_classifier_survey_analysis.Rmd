@@ -13,9 +13,9 @@ library(tidyverse)
 
 
 ```{r}
-raw_data <- read.csv("classifier_knowledge_survey_inlab_20190429_20191025.csv", encoding="UTF-8")
+raw_data_inlab <- read.csv("classifier_knowledge_survey_inlab_20190429_20191025.csv", encoding="UTF-8")
 
-data <- raw_data
+data <- raw_data_inlab
 ```
 
 
@@ -24,17 +24,25 @@ data <- raw_data
 # exclude people
 data <- data[-c(1,2),] # remove column name and description
 data <- subset(data, Status != "Survey Preview")
-data <- subset(data, Finished == "True")
-data <- data[grep("普通话/国语",data$native),]
-data <- subset(data, residence == "中国大陆")
-data <- subset(data, ResponseId != "R_3sdp0npX5mgVzHG") # participant did not use classifiers
+data <- subset(data, Finished == "1")
+data <- subset(data, participant_code != "106") # participant did not use classifiers
 
-data <- data[c(9,20,24:151)] # keep ResponseId, native, responses
 
+# remove columns: keep ResponseId, participant_code, responses
+data <- subset(data,select = c(ResponseId,participant_code,cabbage_2_qa:bow_4_qb))
 data <- gather(data, item, response, "cabbage_2_qa":"bow_4_qb")
-data <- data[order(data$ResponseId),]
+data <- data[order(data$participant_code),]
 
-data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)# edit typo
+# edit typos
+data$item <- gsub("bracelet_3_qa.1","bracelet_3_qb",data$item)
+data$item <- gsub("printer_4_qa.1","racket_4_qa",data$item)
+data$item <- gsub("printer_4_qb.1","racket_4_qb",data$item)
+data$item <- gsub("lighthouse_qb","lighthouse_2_qb",data$item)
+
+
+```
+
+```{r}
 
 # create column item_number: a=first, b=second
 data$item_number <- ifelse(grepl("qa",data$item), "first", "second")
@@ -42,15 +50,9 @@ data$item_number <- ifelse(grepl("qa",data$item), "first", "second")
 # create column item_name: e.g. cabbage_2
 data <- separate(data, item, c("item_name"), "((_q))", extra = "drop")
 
-# separate
-#data <- spread(data, item_number, response)
-## does not work because each item appears multiple times for each participant?
-## leave as is in long format 5/13/19
-
-# add column for classifier_type- general or specific
-data$classifier_type <- ifelse(data$response == "个", "general", "specific")
-## what to do for '没有' or blank?
-## leave for now, ignore second questions 5/13/19
+# add column for classifier_type- general or specific or zero
+data$classifier_type <- ifelse(data$response == "个", "general","specific")
+data$classifier_type[data$response == "没有"] <- "zero"
 
 # convert item_name, response, item_number, classifier_type to factor
 data$item_name <- as.factor(data$item_name)
@@ -58,31 +60,82 @@ data$response <-as.factor(data$response)
 data$item_number <- as.factor(data$item_number)
 data$classifier_type <- as.factor(data$classifier_type)
 data <- droplevels(data)
-
-# count most frequently used CL and relative frequency, sorted by count
-CL_counts <- data %>% filter(item_number == "first") %>% 
-  group_by(.dots=c("item_name", "response")) %>% 
-  tally(sort = TRUE, name = "count") %>% 
-  mutate(freq = count / sum(count)) %>% 
-  top_n(n=1, wt = freq)
 ```
+
+
 ```{r}
+# Question 1. What is the preferred classifier for each item (first question)?
 # count most frequently used CL and relative frequency, all classifiers, sorted by item
-CL_counts_all <- data %>% 
+CL_first_all <- data %>% 
   filter(item_number == "first") %>% 
   group_by(.dots=c("item_name", "response")) %>% 
   tally(name = "count") %>% 
   mutate(freq = count / sum(count))
+#how to order by count for each item?
+
 ```
 
 ```{r}
-# count most frequently used CL and relative frequency, specific classifiers only
-CL_counts_specific <- data %>% 
-  filter(item_number == "first") %>% 
+# Question 2. What is the most frequently produced classifier in the second question?
+CL_second_top <- data %>%
+  filter(item_number == "second") %>%
+  filter(classifier_type != "zero") %>%
   group_by(.dots=c("item_name", "response")) %>% 
-  tally(name = "count") %>% 
+  tally(name = "count") %>%
   mutate(freq = count / sum(count)) %>% 
-  top_n(n=2, wt = freq) %>% 
-  filter(response != "个") %>% 
   top_n(n=1, wt = freq)
+  
+```
+
+```{r}
+# Question 3. Which specific classifier is available for each item (combination of q1 and q2)?
+# Create new data frame for combination of specific from q1 and q2
+data_first <- subset(data, item_number == "first")
+data_first <- subset(data_first, select = -c(classifier_type, item_number))
+data_first <- rename(data_first, response_first = response)
+
+data_second <- subset(data, item_number == "second")
+data_second <- subset(data_second, select = -c(classifier_type, item_number))
+data_second <- rename(data_second, response_second = response)
+
+data_both <- merge(data_first, data_second, by = c("ResponseId","participant_code", "item_name"))
+data_both$response_first <- as.character(data_both$response_first)
+data_both$response_second <- as.character(data_both$response_second)
+data_both$response_both <- rep(NA, nrow(data_both))
+data_both$response_both <- ifelse(data_both$response_first != "个", data_both$response_first, data_both$response_second)
+
+data_both$response_first <- as.factor(data_both$response_first)
+data_both$response_second <- as.factor(data_both$response_second)
+data_both$response_both <- as.factor(data_both$response_both)
+
+write.csv(data_both, file = "combined_questions_classifier_knowledge_survey_inlab_20190429_20191025.csv", row.names = FALSE)
+
+```
+
+```{r}
+# Question 3, cont.
+# from combined table, all specific classifiers available
+CL_both_specific_all <- data_both %>%
+  group_by(.dots=c("item_name", "response_both")) %>% 
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count))
+
+# from combined table, most common specific classifier
+CL_both_specific_top <- data_both %>%
+  group_by(.dots=c("item_name", "response_both")) %>% 
+  tally(name = "count") %>% 
+  mutate(freq = count / sum(count)) %>%
+  top_n(n=1, wt = freq)
+```
+
+```{r}
+# alternative approach to Question 3
+# count most frequently used CL and relative frequency, specific classifiers only, from both questions
+#CL_both_all_specific_2 <- data %>% 
+#  filter(response != "个") %>%
+#  group_by(.dots=c("item_name", "response")) %>% 
+#  tally(name = "count") %>% 
+#  mutate(freq = count / sum(count)) %>%
+#  top_n(n=1, wt = freq)
+
 ```
